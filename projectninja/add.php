@@ -4,8 +4,11 @@
 //     echo $_GET['title'];
 //     echo $_GET['ingredients'];
 // }
+include('config/db_connect.php');
+
 $title=$email=$ingredients='';
-$errors = array('email'=>'','title'=>'','ingredients'=>''); //done i understand this 
+
+$errors = array('email'=>'','title'=>'','ingredients'=>''); //dynamic error
 if(isset( $_POST['submit'])){
     if(empty($_POST['email'])){
         $errors['email'] = 'email is required <br/> ';
@@ -32,10 +35,21 @@ if(isset( $_POST['submit'])){
             $errors['ingredients'] = 'ingredients must be letters nad spaces only';
         }
     }
-    if(array_filter($errors)){
+
+
+    if(array_filter($errors)){//filter the error
          echo 'its not vaild';
     }else{
+        //create new record in database / sql
+        $sql = "INSERT INTO pizza (email,title,ingredients)
+        VALUES ('$title','$email','$ingredients')";
+    }
+    if(mysqli_query($conn,$sql)){
+        //success
         header('location:index.php');
+    }else{
+        //error
+        echo 'my sql error' . mysqli_error($conn,$sql);
     }
 }
 ?>

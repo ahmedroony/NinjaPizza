@@ -1,9 +1,5 @@
 <?php
-    $conn = mysqli_connect('localhost','ahmed','test','pizzas');
-    //check the connection
-    if(!$conn){
-        echo 'connection error' . mysqli_connect_error();
-    }
+    include('config/db_connect.php');
     $sql = 'SELECT id,title,ingredients FROM pizza';
     //make query & get result
     $result = mysqli_query($conn,$sql);
@@ -13,7 +9,7 @@
     mysqli_free_result($result);
     //close connection
     mysqli_close($conn);
-    print_r(explode(',', $pizzas[0]['ingredients']));
+    // print_r(explode(',', $pizzas[0]['ingredients']));
 ?>
 
 <!DOCTYPE html>
@@ -40,10 +36,9 @@
                 </div>
         </div>
         <?php endforeach;?>
-        <?php if(count($pizzas) >=2 ){;?>
-          <p>you have more then 2 </p>
+        <?php if(count($pizzas) >=1 ){;?>
+          <p>you have more then 1 </p>
         <?php }else { ?>
-            
         <?php }?>  
     </div>
     <?php include('templates/footer.php')?> 
